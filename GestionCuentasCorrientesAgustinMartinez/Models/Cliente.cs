@@ -7,5 +7,26 @@
         public string Apellido { get; set; }
         public float Saldo { get; set; }
         public int Estado { get; set; }
+
+        public string EstadoDescripcion
+        {
+            get
+            {
+                return Estado == 1 ? "Activo" : "Dado de Baja";
+            }
+        }
+        /*
+        public string NombreCompleto
+        {
+            set
+            {
+                NombreCompleto = this.Nombre + " " + this.Apellido;
+            }
+            get
+            {
+                return NombreCompleto;
+            }
+        }
+        */
     }
 }
