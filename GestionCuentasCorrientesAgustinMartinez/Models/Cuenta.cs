@@ -10,6 +10,5 @@ namespace GestionCuentasCorrientesAgustinMartinez.Models
         public float Importe { get; set; }
         public string Descripcion { get; set; }
         public int IdCliente { get; set; }
-        
     }
 }

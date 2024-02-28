@@ -55,7 +55,6 @@ namespace GestionCuentasCorrientesAgustinMartinez.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Cuenta cuenta, int IdCliente)
         {
             var cliente = await _context.Clientes
@@ -83,6 +82,7 @@ namespace GestionCuentasCorrientesAgustinMartinez.Controllers
             }
             return View(cuenta);
         }
+
 
         // GET: Cuentas/Edit/5
         public async Task<IActionResult> Edit(int? id)

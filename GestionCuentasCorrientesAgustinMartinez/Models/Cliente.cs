@@ -15,18 +15,13 @@
                 return Estado == 1 ? "Activo" : "Dado de Baja";
             }
         }
-        /*
+        
         public string NombreCompleto
         {
-            set
-            {
-                NombreCompleto = this.Nombre + " " + this.Apellido;
-            }
             get
             {
-                return NombreCompleto;
+                return this.Nombre + " " + this.Apellido;
             }
         }
-        */
     }
 }

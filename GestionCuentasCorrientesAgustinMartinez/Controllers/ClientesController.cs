@@ -52,8 +52,6 @@ namespace GestionCuentasCorrientesAgustinMartinez.Controllers
         }
 
         // POST: Clientes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido,Saldo,Estado")] Cliente cliente)
@@ -84,8 +82,6 @@ namespace GestionCuentasCorrientesAgustinMartinez.Controllers
         }
 
         // POST: Clientes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Apellido,Saldo,Estado")] Cliente cliente)
@@ -99,6 +95,10 @@ namespace GestionCuentasCorrientesAgustinMartinez.Controllers
             {
                 try
                 {
+                    if (cliente != null && cliente.Saldo > 0)
+                    {
+                        cliente.Estado = 1;
+                    }
                     _context.Update(cliente);
                     await _context.SaveChangesAsync();
                 }
@@ -114,13 +114,16 @@ namespace GestionCuentasCorrientesAgustinMartinez.Controllers
             return View(cliente);
         }
 
-
-        [HttpPost]
+        [HttpPut]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangeState(int? id)
+        public async Task<IActionResult> Put (int id)
         {
-            Cliente? cliente = await _context.Clientes.FindAsync(id);
-            
+            var cliente = await _context.Clientes
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (cliente == null)
+            {
+                return NotFound();
+            }
             if (cliente != null && cliente.Saldo == 0)
             {
                 cliente.Estado = 0;
@@ -139,20 +142,7 @@ namespace GestionCuentasCorrientesAgustinMartinez.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
-        //ANTES
-        /*
-        public async Task<IActionResult> Delete(int id)
-        {
-            Cliente? cliente = await _context.Clientes.FindAsync(id);
-            if (cliente != null && cliente.Saldo == 0)
-            {
-                cliente.Estado = 0;
-                _context.Update(cliente);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Index));
-        }
-        */
+                
         private bool ClienteExists(int id)
         {
           return (_context.Clientes?.Any(e => e.Id == id)).GetValueOrDefault();
